@@ -1,0 +1,302 @@
+/* Lore Kernel UI+ — content styles */
+:root {
+  --bg: #0b1020;
+  --card: #0f172a;
+  --card-2: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+  --primary: #60a5fa;
+  --accent: #fbbf24;
+  --success: #34d399;
+  --danger: #f87171;
+  --hunk: #c084fc;
+  --lkui-sidebar-w: 280px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --card-2: #f6f7fb;
+    --text: #0f172a;
+    --muted: #55607a;
+    --border: #e5e7eb;
+    --primary: #2563eb;
+    --accent: #d97706;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --hunk: #7c3aed;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+}
+
+/* App shell */
+#lkui-app {
+  display: contents;
+}
+
+.lkui-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  backdrop-filter: saturate(1.2) blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.lkui-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.lkui-brand .emoji { filter: saturate(1.2); }
+
+.lkui-header form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+}
+
+.lkui-header input[type="text"],
+.lkui-header input[type="search"] {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 260px;
+}
+
+.lkui-header input[type="submit"],
+.lkui-header button[type="submit"] {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lkui-layout {
+  display: grid;
+  grid-template-columns: 1fr 6px var(--lkui-sidebar-w);
+  gap: 16px;
+  padding: 16px;
+}
+
+.lkui-resizer {
+  cursor: col-resize;
+  width: 6px;
+  background: linear-gradient(to bottom, transparent 0, transparent 8px, var(--border) 8px, var(--border) 12px, transparent 12px) repeat-y;
+  border-radius: 6px;
+}
+.lkui-resizer:hover { background-color: color-mix(in oklab, var(--border) 60%, transparent); }
+
+@media (max-width: 1000px) {
+  .lkui-layout.lkui-single { grid-template-columns: 1fr; }
+  .lkui-layout.lkui-single .lkui-resizer, .lkui-layout.lkui-single .lkui-sidebar { display: none; }
+  .lkui-resizer { display: none; }
+  .lkui-sidebar { order: 2; position: static; height: auto; width: auto; }
+}
+
+.lkui-sidebar {
+  position: sticky;
+  top: 64px;
+  align-self: start;
+  height: calc(100vh - 80px);
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 12px;
+}
+
+.lkui-main {
+  display: grid;
+  gap: 12px;
+}
+/* Listing pages (no sidebar) show cards in a responsive grid */
+.lkui-layout.lkui-single .lkui-main {
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+}
+.lkui-item {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.lkui-item-title { margin: 0 0 8px; font-size: 16px; }
+.lkui-meta { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.lkui-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--card-2); border: 1px solid var(--border); color: var(--text); font-weight: 600; }
+.lkui-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.lkui-chip { display: inline-block; padding: 4px 8px; border-radius: 999px; background: var(--card-2); border: 1px solid var(--border); color: var(--primary); text-decoration: none; }
+.lkui-chip:hover { text-decoration: underline; }
+
+.lkui-toggle-original { margin: 8px 0 16px; background: transparent; color: var(--primary); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.lkui-toggle-original:hover { background: var(--card-2); }
+
+.lkui-title {
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+/* Cards for pre blocks */
+.lkui-pre {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  overflow: auto;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+/* Better link visibility */
+.lkui-main a, .lkui-sidebar a { color: var(--primary); text-decoration: none; }
+.lkui-main a:hover, .lkui-sidebar a:hover { text-decoration: underline; }
+
+/* Diff/patch highlighting based on server-side classes */
+pre .head { color: var(--primary); font-weight: 700; }
+pre .hunk { color: var(--hunk); font-weight: 600; }
+pre .add  { color: var(--success); background: color-mix(in oklab, var(--success) 12%, transparent); display: block; border-left: 3px solid var(--success); padding-left: 6px; }
+pre .del  { color: var(--danger);  background: color-mix(in oklab, var(--danger) 12%,  transparent); display: block; border-left: 3px solid var(--danger);  padding-left: 6px; }
+
+/* Inline code or monospace spans, just in case */
+code, kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+/* Make long lines scroll nicely */
+pre { white-space: pre-wrap; }
+.lkui-pre { white-space: pre; overflow-x: auto; }
+
+/* Subtle separators inside the main area */
+hr { border: none; border-top: 1px solid var(--border); }
+
+/* Sidebar: make the thread overview more readable */
+.lkui-sidebar pre { background: transparent; border: 0; padding: 0; }
+.lkui-sidebar b#t { display: block; margin-bottom: 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+
+/* Pills for view mode links like [flat|nested] */
+.lkui-pre a[href*="/T/#u"],
+.lkui-pre a[href*="/t/#u"] {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-2);
+  margin: 0 2px;
+}
+
+/* Footer note */
+.lkui-footer-note {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  margin: 12px 0 24px;
+}
+
+.lkui-header pre { margin: 0; background: transparent; border: 0; display: contents; }
+[id] { scroll-margin-top: 72px; }
+.lkui-list-wrap { display: grid; gap: 12px; }
+.lkui-filterbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.lkui-filter { background: var(--card-2); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.lkui-filter.is-active { background: color-mix(in oklab, var(--primary) 25%, var(--card-2)); border-color: var(--primary); }
+
+.lkui-tags { display: flex; gap: 6px; margin-bottom: 6px; }
+.lkui-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--card-2); border: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+.lkui-tag.is-patch { color: #22c55e; border-color: #16a34a33; }
+.lkui-tag.is-gitpull { color: #60a5fa; border-color: #3b82f633; }
+.lkui-tag.is-rfc { color: #fbbf24; border-color: #f59e0b33; }
+pre .head { color: var(--primary); font-weight: 700; }
+pre .hunk { color: var(--hunk); font-weight: 600; }
+pre .add  { color: var(--success); background: color-mix(in oklab, var(--success) 12%, transparent); display: block; border-left: 3px solid var(--success); padding-left: 6px; }
+pre .del  { color: var(--danger);  background: color-mix(in oklab, var(--danger) 12%,  transparent); display: block; border-left: 3px solid var(--danger);  padding-left: 6px; }
+
+/* Inline code or monospace spans, just in case */
+code, kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+/* Make long lines scroll nicely */
+pre { white-space: pre-wrap; }
+.lkui-pre { white-space: pre; overflow-x: auto; }
+
+/* Subtle separators inside the main area */
+hr { border: none; border-top: 1px solid var(--border); }
+
+/* Sidebar: make the thread overview more readable */
+.lkui-sidebar pre { background: transparent; border: 0; padding: 0; }
+.lkui-sidebar b#t { display: block; margin-bottom: 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+
+/* Pills for view mode links like [flat|nested] */
+.lkui-pre a[href*="/T/#u"],
+.lkui-pre a[href*="/t/#u"] {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-2);
+  margin: 0 2px;
+}
+
+/* Footer note */
+.lkui-footer-note {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  margin: 12px 0 24px;
+}
+
+.lkui-header pre { margin: 0; background: transparent; border: 0; display: contents; }
+[id] { scroll-margin-top: 72px; }
+
+/* Visually distinct thread cards by type */
+.lkui-item { position: relative; transition: box-shadow .2s ease, transform .08s ease; }
+.lkui-item:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.lkui-item::before { content: ""; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 4px; border-radius: 12px 0 0 12px; background: var(--item-accent, var(--primary)); opacity: .9; }
+
+/* Map kinds to accent colors */
+.lkui-item[data-kind="PATCH"]   { --item-accent: #22c55e; }
+.lkui-item[data-kind="GITPULL"] { --item-accent: #60a5fa; }
+.lkui-item[data-kind="RFC"]     { --item-accent: #fbbf24; }
+.lkui-item[data-kind="OTHER"]   { --item-accent: var(--primary); }
+
+/* Subtle tint and border harmonized with accent */
+.lkui-item[data-kind] {
+  background-image: linear-gradient(0deg, color-mix(in oklab, var(--item-accent) 7%, transparent), transparent);
+  border-color: color-mix(in oklab, var(--item-accent) 22%, var(--border));
+}

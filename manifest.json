@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Lore Kernel UI+ (Modernizer)",
+  "description": "Transforms lore.kernel.org into a modern, thread-focused interface with enhanced code presentation while preserving all existing functionality.",
+  "version": "0.1.0",
+  "content_scripts": [
+    {
+      "matches": ["*://lore.kernel.org/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": ["*://lore.kernel.org/*"]
+}
